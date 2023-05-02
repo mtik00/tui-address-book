@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "vcard-test"
+version = "0.1.0"
+description = ""
+authors = ["Timothy McFadden <mtik00@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "vcard_test"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.3.0"
+ipdb = "^0.13.13"
+ipython = "^8.13.1"
+mypy = "^1.2.0"
+flake8 = "^6.0.0"
+pre-commit = "^3.3.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
