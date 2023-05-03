@@ -4,7 +4,12 @@ import datetime
 
 from peewee import CharField, DateTimeField, ForeignKeyField, Model, SqliteDatabase
 
-database = SqliteDatabase("tutorial.db")
+from .settings import settings
+
+if not settings.database.path:
+    raise ValueError("Must define the database path")
+
+database = SqliteDatabase(settings.database.path)
 
 
 class BaseModel(Model):
@@ -33,7 +38,13 @@ class LabelAddress(BaseModel):
 
 
 def get_addresses_for_label(label: str) -> list[Address]:
-    return Address.select().join(LabelAddress).join(Label).where(Label.name == label)
+    return (
+        Address.select()
+        .join(LabelAddress)
+        .join(Label)
+        .where(Label.name == label)
+        .order_by(Address.name)
+    )
 
 
 def get_labels_for_address(name: str, street: str) -> list[Label]:
@@ -42,6 +53,7 @@ def get_labels_for_address(name: str, street: str) -> list[Label]:
         .join(LabelAddress)
         .join(Address)
         .where(Address.name == name, Address.street == street)
+        .order_by(Address.name)
     )
 
 
