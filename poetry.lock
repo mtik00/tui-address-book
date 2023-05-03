@@ -643,6 +643,24 @@ files = [
 plugins = ["importlib-metadata"]
 
 [[package]]
+name = "pytermgui"
+version = "7.3.0"
+description = "Python TUI framework with mouse support, modular widget system, customizable and rapid terminal markup language and more!"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "pytermgui-7.3.0-py3-none-any.whl", hash = "sha256:a08e525c6bd7fe74bb3d0910bd37bd2b9eb6dbb98667f807cce2cd02eb8e9525"},
+    {file = "pytermgui-7.3.0.tar.gz", hash = "sha256:3a6211e872fae6b6a6445efff2260266f33d288a7ec64411238a673a23f333af"},
+]
+
+[package.dependencies]
+typing-extensions = "*"
+
+[package.extras]
+yaml = ["pyyaml"]
+
+[[package]]
 name = "python-dotenv"
 version = "1.0.0"
 description = "Read key-value pairs from a .env file and set them as environment variables"
@@ -832,4 +850,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "e3585ec7b578894e502a3939a567ecfa77dda4952789df5dcd3714ae4d042a84"
+content-hash = "9ffdc778034df34e6952f196a7c7a1ba3fe85cd3b9a1631e6185645014ee6ea5"

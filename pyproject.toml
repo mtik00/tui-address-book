@@ -10,6 +10,7 @@ packages = [{include = "vcard_test"}]
 python = "^3.10"
 peewee = "^3.16.2"
 pydantic = {extras = ["dotenv"], version = "^1.10.7"}
+pytermgui = "^7.3.0"
 
 
 [tool.poetry.group.dev.dependencies]

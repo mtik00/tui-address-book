@@ -1,4 +1,6 @@
-from .db import cur
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
-res = cur.execute("SELECT name FROM sqlite_master")
-print(res.fetchone())
+from .app import main
+
+main()
