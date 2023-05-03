@@ -8,6 +8,7 @@ packages = [{include = "vcard_test"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
+peewee = "^3.16.2"
 
 
 [tool.poetry.group.dev.dependencies]
