@@ -4,12 +4,12 @@
 from textual.app import App, Binding, ComposeResult
 from textual.containers import Container, VerticalScroll
 from textual.reactive import reactive
-from textual.widgets import Footer, Header, Label, ListItem, ListView, Static
+from textual.widgets import Footer, Header, ListItem, ListView, Static
 
 from .db import Address, get_labels_for_address
 
 
-class AddressWidget(Label):
+class AddressListItem(ListItem):
     def __init__(self, address, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.address = address
@@ -17,9 +17,11 @@ class AddressWidget(Label):
     def render(self):
         return self.address.name
 
-    def on_mouse_down(self, event):
-        """Tell the app to update the info widget."""
-        app.new_address(self.address)
+    def watch_highlighted(self, value: bool):
+        if value:
+            app.new_address(self.address)
+
+        super().watch_highlighted(value)
 
 
 class AddressInfoWidget(Static):
@@ -54,7 +56,7 @@ class AddressBookApp(App):
         with Container(id="app-grid"):
             with VerticalScroll(id="left-pane"):
                 children = [
-                    ListItem(AddressWidget(address))
+                    AddressListItem(address)
                     for address in Address.select().order_by(Address.name)
                 ]
                 yield ListView(*children)
