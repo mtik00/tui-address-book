@@ -36,6 +36,8 @@ def create_tables():
             address = Address.create(
                 name=fake.name(),
                 street=fake.street_address(),
+                city=fake.city(),
+                state=fake.state_abbr(),
                 zipcode=fake.postcode(),
             )
 
@@ -46,16 +48,6 @@ def create_tables():
         for year in random_years:
             label = Label.select().where(Label.name == f"Christmas {year}").first()
             LabelAddress.create(label=label, address=address)
-
-        # address = Address.create(
-        #     name=fake.name(),
-        #     street=fake.street_address(),
-        #     zipcode=fake.postcode(),
-        # )
-
-        # for year in [2022, 2023]:
-        #     label = Label.select().where(Label.name == f"Christmas {year}").first()
-        #     LabelAddress.create(label=label, address=address)
 
 
 def main():

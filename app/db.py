@@ -24,6 +24,8 @@ class Label(BaseModel):
 class Address(BaseModel):
     name = CharField()
     street = CharField()
+    city = CharField()
+    state = CharField()
     zipcode = CharField()
     updated_at = DateTimeField(default=datetime.datetime.now)
 

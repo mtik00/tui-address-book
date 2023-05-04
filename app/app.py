@@ -23,6 +23,7 @@ class AddressWidget(Static):
 
 
 class AddressInfoWidget(Static):
+    # Re-draw when the address changes
     address = reactive(Address.select().first())
 
     def __init__(self, address, *args, **kwargs):
@@ -31,7 +32,7 @@ class AddressInfoWidget(Static):
 
     def render(self):
         if self.address:
-            return self.address.street
+            return f"{self.address.street}\n{self.address.city}, {self.address.state} {self.address.zipcode}"
 
         return ""
 
