@@ -4,12 +4,12 @@
 from textual.app import App, Binding, ComposeResult
 from textual.containers import Container, VerticalScroll
 from textual.reactive import reactive
-from textual.widgets import Footer, Header, Static
+from textual.widgets import Footer, Header, Label, ListItem, ListView, Static
 
 from .db import Address, get_labels_for_address
 
 
-class AddressWidget(Static):
+class AddressWidget(Label):
     def __init__(self, address, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.address = address
@@ -42,7 +42,7 @@ class AddressInfoWidget(Static):
         return ""
 
 
-class CombiningLayoutsExample(App):
+class AddressBookApp(App):
     CSS_PATH = "css/app.css"
 
     BINDINGS = [
@@ -50,11 +50,14 @@ class CombiningLayoutsExample(App):
     ]
 
     def compose(self) -> ComposeResult:
-        yield Header(show_clock=True, name="Address Book")
+        yield Header(name="My App")
         with Container(id="app-grid"):
             with VerticalScroll(id="left-pane"):
-                for address in Address.select().order_by(Address.name):
-                    yield AddressWidget(address)
+                children = [
+                    ListItem(AddressWidget(address))
+                    for address in Address.select().order_by(Address.name)
+                ]
+                yield ListView(*children)
             with VerticalScroll(id="right-pane"):
                 yield AddressInfoWidget(Address.select().first())
         yield Footer()
@@ -64,7 +67,7 @@ class CombiningLayoutsExample(App):
         widg.address = address
 
 
-app = CombiningLayoutsExample()
+app = AddressBookApp()
 
 if __name__ == "__main__":
     app.run()
