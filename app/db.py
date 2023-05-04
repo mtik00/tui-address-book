@@ -55,35 +55,3 @@ def get_labels_for_address(name: str, street: str) -> list[Label]:
         .where(Address.name == name, Address.street == street)
         .order_by(Address.name)
     )
-
-
-def create_tables():
-    with database:
-        database.create_tables([Address, Label, LabelAddress])
-
-    with database.atomic():
-        for year in [2020, 2021, 2022, 2023]:
-            Label.create(
-                name=f"Christmas {year}",
-            )
-
-    with database.atomic():
-        address = Address.create(
-            name="The McFaddens",
-            street="1313 Mockingbird Lane",
-            zipcode="11111",
-        )
-
-        for year in [2021, 2022, 2023]:
-            label = Label.select().where(Label.name == f"Christmas {year}").first()
-            LabelAddress.create(label=label, address=address)
-
-        address = Address.create(
-            name="The Smiths",
-            street="1600 Pennsylvania Ave",
-            zipcode="11111",
-        )
-
-        for year in [2022, 2023]:
-            label = Label.select().where(Label.name == f"Christmas {year}").first()
-            LabelAddress.create(label=label, address=address)
