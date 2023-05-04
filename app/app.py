@@ -6,7 +6,7 @@ from textual.containers import Container, VerticalScroll
 from textual.reactive import reactive
 from textual.widgets import Footer, Header, Static
 
-from .db import Address
+from .db import Address, get_labels_for_address
 
 
 class AddressWidget(Static):
@@ -32,7 +32,12 @@ class AddressInfoWidget(Static):
 
     def render(self):
         if self.address:
-            return f"{self.address.street}\n{self.address.city}, {self.address.state} {self.address.zipcode}"
+            labels = get_labels_for_address(self.address.name, self.address.street)
+            return (
+                f"{self.address.street}\n{self.address.city},"
+                f"{self.address.state} {self.address.zipcode}\n\n"
+                f"{', '.join([label.name for label in labels])}"
+            )
 
         return ""
 

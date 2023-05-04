@@ -55,5 +55,5 @@ def get_labels_for_address(name: str, street: str) -> list[Label]:
         .join(LabelAddress)
         .join(Address)
         .where(Address.name == name, Address.street == street)
-        .order_by(Address.name)
+        .order_by(Label.name)
     )
