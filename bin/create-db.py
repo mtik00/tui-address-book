@@ -41,9 +41,9 @@ def create_tables():
                 zipcode=fake.postcode(),
             )
 
-            random_years = [
+            random_years = {
                 random.choice(years) for _ in range(random.randint(1, len(years)))
-            ]
+            }
 
         for year in random_years:
             label = Label.select().where(Label.name == f"Christmas {year}").first()
