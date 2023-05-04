@@ -47,7 +47,7 @@ class CombiningLayoutsExample(App):
         yield Header(show_clock=True, name="Address Book")
         with Container(id="app-grid"):
             with VerticalScroll(id="left-pane"):
-                for address in Address.select():
+                for address in Address.select().order_by(Address.name):
                     yield AddressWidget(address)
             with VerticalScroll(id="right-pane"):
                 yield AddressInfoWidget(Address.select().first())
