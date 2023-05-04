@@ -80,7 +80,7 @@ def create_tables():
 
         address = Address.create(
             name="The Smiths",
-            street="1313 Mockingbird Lane",
+            street="1600 Pennsylvania Ave",
             zipcode="11111",
         )
 

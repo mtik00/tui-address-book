@@ -10,7 +10,7 @@ packages = [{include = "vcard_test"}]
 python = "^3.10"
 peewee = "^3.16.2"
 pydantic = {extras = ["dotenv"], version = "^1.10.7"}
-pytermgui = "^7.3.0"
+textual = "^0.23.0"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -20,6 +20,8 @@ ipython = "^8.13.1"
 mypy = "^1.2.0"
 flake8 = "^6.0.0"
 pre-commit = "^3.3.1"
+textual = {extras = ["dev"], version = "^0.23.0"}
+faker = "^18.6.2"
 
 [build-system]
 requires = ["poetry-core"]

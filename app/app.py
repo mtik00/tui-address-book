@@ -1,48 +1,64 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import pytermgui as ptg
+from textual.app import App, Binding, ComposeResult
+from textual.containers import Container, VerticalScroll
+from textual.reactive import reactive
+from textual.widgets import Footer, Header, Static
 
 from .db import Address
-from .settings import PYTERMGUI_CONFIG
 
 
-def submit(*args, **kwargs):
-    pass
+class AddressWidget(Static):
+    def __init__(self, address, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.address = address
+
+    def render(self):
+        return self.address.name
+
+    def on_mouse_down(self, event):
+        """Tell the app to update the info widget."""
+        app.new_address(self.address)
 
 
-def main():
-    address = Address.select().first()
+class AddressInfoWidget(Static):
+    address = reactive(Address.select().first())
 
-    with ptg.YamlLoader() as loader:
-        loader.load(PYTERMGUI_CONFIG)
+    def __init__(self, address, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.address = address
 
-    with ptg.WindowManager() as manager:
-        window = (
-            ptg.Window(
-                "",
-                ptg.InputField(address.name, prompt="Name: "),
-                ptg.InputField(address.street, prompt="Address: "),
-                ptg.InputField(address.zipcode, prompt="Zip code: "),
-                "",
-                ptg.Container(
-                    "Additional notes:",
-                    ptg.InputField(
-                        "A whole bunch of\nMeaningful notes\nand stuff", multiline=True
-                    ),
-                    box="EMPTY_VERTICAL",
-                ),
-                "",
-                ["Submit", lambda *_: submit(manager, window)],
-                width=60,
-                box="DOUBLE",
-            )
-            .set_title("[210 bold]New contact")
-            .center()
-        )
+    def render(self):
+        if self.address:
+            return self.address.street
 
-        manager.add(window)
+        return ""
 
+
+class CombiningLayoutsExample(App):
+    CSS_PATH = "css/app.css"
+
+    BINDINGS = [
+        Binding(key="q", action="quit", description="Quit the app"),
+    ]
+
+    def compose(self) -> ComposeResult:
+        yield Header(show_clock=True, name="Address Book")
+        with Container(id="app-grid"):
+            with VerticalScroll(id="left-pane"):
+                for address in Address.select():
+                    yield AddressWidget(address)
+            with VerticalScroll(id="right-pane"):
+                yield AddressInfoWidget(Address.select().first())
+        yield Footer()
+
+    def new_address(self, address: Address) -> None:
+        widg = self.query_one(AddressInfoWidget)
+        widg.address = address
+
+
+app = CombiningLayoutsExample()
 
 if __name__ == "__main__":
-    main()
+    app.run()
