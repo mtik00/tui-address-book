@@ -28,7 +28,7 @@ config:
 """
 
 
-class LogSettings(BaseModel):
+class LoggingSettings(BaseModel):
     level: str = "INFO"
     filename: str | None = None
     file_level: str = "INFO"
@@ -41,7 +41,7 @@ class DatabaseSettings(BaseModel):
 
 class Settings(BaseSettings):
     database: DatabaseSettings = DatabaseSettings()
-    logging: LogSettings = LogSettings()
+    logging: LoggingSettings = LoggingSettings()
 
     class Config:
         env_prefix = "address_book_"
