@@ -4,6 +4,9 @@ import os
 
 import pendulum
 
+from .settings import settings
+
+
 TIMEZONE = "America/Denver"
 
 
@@ -50,7 +53,7 @@ def set_root_level(level):
     logging.getLogger().setLevel(level)
 
 
-def init_logger(logfile: str | None = None):
+def init_logger():
     fmt = Formatter(
         TIMEZONE,
         fmt="%(asctime)s {%(name)10s:%(lineno)3s} %(levelname)s: %(message)s",
@@ -63,10 +66,12 @@ def init_logger(logfile: str | None = None):
 
     handlers: list[logging.StreamHandler] = [handler]
 
-    if logfile:
-        file_handler = logging.FileHandler(logfile)
+    if settings.logging.filename:
+        file_handler = logging.FileHandler(
+            settings.logging.filename, mode=settings.logging.file_mode
+        )
         file_handler.setFormatter(fmt)
-        file_handler.setLevel("INFO")
+        file_handler.setLevel(settings.logging.file_level)
         handlers.append(file_handler)
 
     logging.basicConfig(level=logging.DEBUG, handlers=handlers)

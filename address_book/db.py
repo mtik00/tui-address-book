@@ -30,7 +30,7 @@ class Address(BaseModel):
     updated_at = DateTimeField(default=datetime.datetime.now)
 
     def save(self, *args, **kwargs):
-        self.updated_at = datetime.datetime.now()
+        self.updated_at = datetime.datetime.now()  # type: ignore
         return super().save(*args, **kwargs)
 
 

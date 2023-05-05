@@ -28,12 +28,20 @@ config:
 """
 
 
+class LogSettings(BaseModel):
+    level: str = "INFO"
+    filename: str | None = None
+    file_level: str = "INFO"
+    file_mode: str = "a"
+
+
 class DatabaseSettings(BaseModel):
     path: Optional[Path] = None
 
 
 class Settings(BaseSettings):
     database: DatabaseSettings = DatabaseSettings()
+    logging: LogSettings = LogSettings()
 
     class Config:
         env_prefix = "address_book_"

@@ -43,7 +43,7 @@ class AddressInfoWidget(Static):
             return (
                 f"{self.address.street}\n{self.address.city},"
                 f"{self.address.state} {self.address.zipcode}\n\n"
-                f"{', '.join([label.name for label in labels])}"
+                f"{', '.join([str(label.name) for label in labels])}"
             )
 
         return ""
@@ -126,7 +126,7 @@ class AddressBookApp(App):
 app = AddressBookApp()
 
 if __name__ == "__main__":
-    init_logger("out.log")
+    init_logger()
     set_root_level("DEBUG")
     log = logging.getLogger(__name__)
 
