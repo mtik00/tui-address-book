@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import datetime
+import logging
 
 from peewee import CharField, DateTimeField, ForeignKeyField, Model, SqliteDatabase
 
@@ -10,6 +11,8 @@ if not settings.database.path:
     raise ValueError("Must define the database path")
 
 database = SqliteDatabase(settings.database.path, pragmas={"foreign_keys": "ON"})
+
+log = logging.getLogger(__name__)
 
 
 class BaseModel(Model):
@@ -57,3 +60,7 @@ def get_labels_for_address(name: str, street: str) -> list[Label]:
         .where(Address.name == name, Address.street == street)
         .order_by(Label.name)
     )
+
+
+def add_label_to_address(address: Address, label: Label):
+    LabelAddress.get_or_create(label=label, address=address)
