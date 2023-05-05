@@ -24,7 +24,7 @@ class AddressListItem(ListItem):
 
     def watch_highlighted(self, value: bool):
         if value:
-            self.app.new_address(self.address)
+            self.app.new_address(self.address)  # type: ignore
 
         super().watch_highlighted(value)
 
@@ -71,19 +71,20 @@ class EditScreen(ModalScreen):
         if event.button.id == "cancel":
             self.app.pop_screen()
         else:
-            self.address.name = self.query_one("#addr-name").value
-            self.address.street = self.query_one("#addr-street").value
-            self.address.city = self.query_one("#addr-city").value
-            self.address.state = self.query_one("#addr-state").value
-            self.address.zipcode = self.query_one("#addr-zipcode").value
+            self.address.name = self.query_one("#addr-name", Input).value
+            self.address.street = self.query_one("#addr-street", Input).value
+            self.address.city = self.query_one("#addr-city", Input).value
+            self.address.state = self.query_one("#addr-state", Input).value
+            self.address.zipcode = self.query_one("#addr-zipcode", Input).value
             self.address.save()
             self.app.pop_screen()
 
             # Update the widgets we just modified
-            wdg: AddressListItem = self.app.query_one(
-                "#address-listview"
-            ).highlighted_child
-            wdg.refresh(layout=True)
+            wdg: ListView = self.app.query_one("#address-listview", ListView)
+
+            item: ListItem | None = wdg.highlighted_child
+            if item:
+                item.refresh(layout=True)
 
             self.app.query_one("#address-info").refresh()
 

@@ -23,6 +23,8 @@ pre-commit = "^3.3.1"
 textual = {extras = ["dev"], version = "^0.23.0"}
 faker = "^18.6.2"
 ruff = "^0.0.264"
+types-peewee = "^3.16.0.0"
+types-python-dateutil = "^2.8.19.12"
 
 [build-system]
 requires = ["poetry-core"]
@@ -30,3 +32,10 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.ruff]
 line-length = 120
+
+[tool.mypy]
+plugins = [
+  "pydantic.mypy"
+]
+
+follow_imports = "silent"
