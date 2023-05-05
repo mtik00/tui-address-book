@@ -6,7 +6,6 @@ import pendulum
 
 from .settings import settings
 
-
 TIMEZONE = "America/Denver"
 
 
@@ -71,7 +70,7 @@ def init_logger():
             settings.logging.filename, mode=settings.logging.file_mode
         )
         file_handler.setFormatter(fmt)
-        file_handler.setLevel(settings.logging.file_level)
+        file_handler.setLevel(logging._nameToLevel[settings.logging.file_level])
         handlers.append(file_handler)
 
         root = logging.getLogger()
