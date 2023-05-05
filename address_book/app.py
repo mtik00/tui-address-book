@@ -15,11 +15,16 @@ log = logging.getLogger(__name__)
 
 
 class AddressListItem(ListItem):
+    selected = reactive(False)
+
     def __init__(self, address, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.address = address
 
     def render(self):
+        if self.selected:
+            return f"* {self.address.name}"
+
         return self.address.name
 
     def watch_highlighted(self, value: bool):
@@ -98,6 +103,9 @@ class AddressBookApp(App):
     BINDINGS = [
         Binding(key="q", action="quit", description="Quit"),
         Binding(key="e", action="edit", description="Edit"),
+        Binding(key="s", action="select", description="Select Item"),
+        Binding(key="ctrl+a", action="all", description="Select All"),
+        Binding(key="ctrl+n", action="none", description="Select None"),
     ]
 
     def compose(self) -> ComposeResult:
@@ -121,6 +129,25 @@ class AddressBookApp(App):
     def action_edit(self):
         address = self.query_one(AddressInfoWidget).address
         self.push_screen(EditScreen(address))
+
+    def action_select(self):
+        # Update the widgets we just modified
+        wdg: ListView = self.app.query_one("#address-listview", ListView)
+
+        item: AddressListItem | None = wdg.highlighted_child  # type: ignore
+        if item:
+            item.selected = not item.selected
+            item.refresh()
+
+    def action_all(self):
+        for item in self.query(AddressListItem):
+            item.selected = True
+            item.refresh()
+
+    def action_none(self):
+        for item in self.query(AddressListItem):
+            item.selected = False
+            item.refresh()
 
 
 app = AddressBookApp()
