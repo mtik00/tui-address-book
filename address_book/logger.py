@@ -74,4 +74,11 @@ def init_logger():
         file_handler.setLevel(settings.logging.file_level)
         handlers.append(file_handler)
 
+        root = logging.getLogger()
+        if logging._nameToLevel[settings.logging.file_level] < root.level:
+            for root_handler in [x for x in root.handlers if not x.level]:
+                root_handler.setLevel(root.level)
+
+            root.setLevel(settings.logging.file_level)
+
     logging.basicConfig(level=logging.DEBUG, handlers=handlers)
