@@ -86,5 +86,13 @@ QuitScreen {
 }
 
 Button {
-    width: 100%;
+    width: 25%;
+}
+
+#cancel {
+    background: orange;
+}
+
+EditScreen {
+    layout: horizontal
 }
