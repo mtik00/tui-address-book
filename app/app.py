@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import logging
 
 from textual.app import App, Binding, ComposeResult
 from textual.containers import Container, Grid, VerticalScroll
@@ -8,6 +9,9 @@ from textual.screen import ModalScreen
 from textual.widgets import Button, Footer, Header, Input, ListItem, ListView, Static
 
 from .db import Address, get_labels_for_address
+from .logger import init_logger, set_root_level
+
+log = logging.getLogger(__name__)
 
 
 class AddressListItem(ListItem):
@@ -95,16 +99,21 @@ class AddressBookApp(App):
     def new_address(self, address: Address) -> None:
         widg = self.query_one(AddressInfoWidget)
         widg.address = address
+        log.info("%s: new address set", self.__class__)
 
     def action_edit(self):
         address = self.query_one(AddressInfoWidget).address
         self.push_screen(EditScreen(address))
         # TODO: Figure out how to redraw the ListItem
-        # self.query_one(AddressListItem, address.name).refresh()
+        self.query_one(AddressListItem).refresh()
         # self.compose()
 
 
 app = AddressBookApp()
 
 if __name__ == "__main__":
+    init_logger("out.log")
+    set_root_level("DEBUG")
+    log = logging.getLogger(__name__)
+
     app.run()
