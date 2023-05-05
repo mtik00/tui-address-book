@@ -13,7 +13,7 @@ import faker
 UP_DIR = str(Path(__file__).parent / "..")
 sys.path.insert(0, UP_DIR)
 
-from app.db import Address, Label, LabelAddress, database  # noqa: E402
+from address_book.db import Address, Label, LabelAddress, database  # noqa: E402
 
 fake = faker.Faker()
 
