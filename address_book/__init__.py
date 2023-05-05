@@ -5,4 +5,7 @@ from .app import app
 from .logger import init_logger
 
 init_logger()
-app.run()
+
+
+if __name__ == "__main__":
+    app.run()

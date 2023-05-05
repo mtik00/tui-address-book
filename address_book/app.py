@@ -8,8 +8,7 @@ from textual.reactive import reactive
 from textual.screen import ModalScreen
 from textual.widgets import Button, Footer, Header, Input, ListItem, ListView, Static
 
-from .db import Address, get_labels_for_address
-from .logger import init_logger, set_root_level
+from .db import Address, Label, add_label_to_address, get_labels_for_address
 
 log = logging.getLogger(__name__)
 
@@ -106,6 +105,7 @@ class AddressBookApp(App):
         Binding(key="s", action="select", description="Select Item"),
         Binding(key="ctrl+a", action="all", description="Select All"),
         Binding(key="ctrl+n", action="none", description="Select None"),
+        Binding(key="l", action="label", description="Label selected items"),
     ]
 
     def compose(self) -> ComposeResult:
@@ -149,12 +149,18 @@ class AddressBookApp(App):
             item.selected = False
             item.refresh()
 
+    def action_label(self):
+        label = Label.select().where(Label.name == "Christmas 2024").first()
+        for item in self.query(AddressListItem):
+            if item.selected:
+                add_label_to_address(label=label, address=item.address)
+                item.refresh()
+        self.query_one("#address-info").refresh()
+
 
 app = AddressBookApp()
 
 if __name__ == "__main__":
-    init_logger()
-    set_root_level("DEBUG")
     log = logging.getLogger(__name__)
 
     app.run()
