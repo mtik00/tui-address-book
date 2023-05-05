@@ -9,7 +9,7 @@ from .settings import settings
 if not settings.database.path:
     raise ValueError("Must define the database path")
 
-database = SqliteDatabase(settings.database.path)
+database = SqliteDatabase(settings.database.path, pragmas={"foreign_keys": "ON"})
 
 
 class BaseModel(Model):
