@@ -53,7 +53,7 @@ def set_root_level(level):
 def init_logger(logfile: str | None = None):
     fmt = Formatter(
         TIMEZONE,
-        fmt="%(asctime)s {%(name)20s:%(lineno)3s} %(levelname)s: %(message)s",
+        fmt="%(asctime)s {%(name)10s:%(lineno)3s} %(levelname)s: %(message)s",
         datefmt="%m/%d/%Y %H:%M:%S %Z",
     )
 

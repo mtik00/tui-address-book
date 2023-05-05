@@ -15,8 +15,6 @@ log = logging.getLogger(__name__)
 
 
 class AddressListItem(ListItem):
-    # address = reactive(Address.select().first())
-
     def __init__(self, address, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.address = address
@@ -88,6 +86,9 @@ class EditScreen(ModalScreen):
             wdg.refresh(layout=True)
 
             self.app.query_one("#address-info").refresh()
+
+    def key_escape(self):
+        self.app.pop_screen()
 
 
 class AddressBookApp(App):
