@@ -30,6 +30,7 @@ class Address(BaseModel):
     city = CharField()
     state = CharField()
     zipcode = CharField()
+    nickname = CharField(null=True)
     updated_at = DateTimeField(default=datetime.datetime.now)
 
     def save(self, *args, **kwargs):

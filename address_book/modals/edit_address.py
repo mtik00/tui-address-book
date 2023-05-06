@@ -16,6 +16,7 @@ class EditAddressScreen(ModalScreen):
     def compose(self) -> ComposeResult:
         with Vertical():
             yield Input(value=self.address.name, id="addr-name")
+            yield Input(value=self.address.nickname, id="addr-nickname")
             yield Input(value=self.address.street, id="addr-street")
             yield Input(value=self.address.city, id="addr-city")
             yield Input(value=self.address.state, id="addr-state")
@@ -29,6 +30,7 @@ class EditAddressScreen(ModalScreen):
             self.app.pop_screen()
         else:
             self.address.name = self.query_one("#addr-name", Input).value
+            self.address.nickname = self.query_one("#addr-nickname", Input).value
             self.address.street = self.query_one("#addr-street", Input).value
             self.address.city = self.query_one("#addr-city", Input).value
             self.address.state = self.query_one("#addr-state", Input).value
