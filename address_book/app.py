@@ -115,9 +115,9 @@ class AddressBookApp(App):
         self.query_one("#address-info").refresh()
 
 
-app = AddressBookApp()
-
 if __name__ == "__main__":
+    app = AddressBookApp()
+
     log = logging.getLogger(__name__)
 
     app.run()
