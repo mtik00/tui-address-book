@@ -42,15 +42,21 @@ class AddressInfoWidget(Static):
         self.address = address
 
     def render(self):
+        lines = []
         if self.address:
             labels = get_labels_for_address(self.address.name, self.address.street)
-            return (
-                f"{self.address.street}\n{self.address.city},"
-                f"{self.address.state} {self.address.zipcode}\n\n"
-                f"{', '.join([str(label.name) for label in labels])}"
-            )
 
-        return ""
+            if self.address.nickname:
+                lines = [f"[italic]{self.address.nickname}[/italic]", ""]
+
+            lines += [
+                self.address.street,
+                f"{self.address.city}, {self.address.state} {self.address.zipcode}",
+                "",
+                f"{', '.join([str(label.name) for label in labels])}",
+            ]
+
+        return "\n".join(lines)
 
 
 class AddressBookApp(App):
