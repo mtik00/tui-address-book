@@ -19,6 +19,7 @@ class DatabaseSettings(BaseModel):
 
 
 class Settings(BaseSettings):
+    debug: bool = False
     database: DatabaseSettings = DatabaseSettings()
     logging: LoggingSettings = LoggingSettings()
 

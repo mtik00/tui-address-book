@@ -65,6 +65,9 @@ def init_logger():
 
     handlers: list[logging.StreamHandler] = [handler]
 
+    if settings.debug and not settings.logging.filename:
+        settings.logging.filename = ".secrets/log.txt"
+
     if settings.logging.filename:
         file_handler = logging.FileHandler(
             settings.logging.filename, mode=settings.logging.file_mode
