@@ -11,7 +11,6 @@ from .db import Address, Label, add_label_to_address, get_labels_for_address
 from .modals.edit_address import EditAddressScreen
 from .modals.help import HelpScreen
 
-
 log = logging.getLogger(__name__)
 
 
@@ -137,9 +136,10 @@ class AddressBookApp(App):
         self.query_one("#address-info").refresh()
 
 
-if __name__ == "__main__":
+def main():
     app = AddressBookApp()
-
-    log = logging.getLogger(__name__)
-
     app.run()
+
+
+if __name__ == "__main__":
+    log = logging.getLogger(__name__)
