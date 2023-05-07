@@ -44,8 +44,6 @@ class AddressInfoWidget(Static):
     def render(self):
         lines = []
         if self.address:
-            labels = get_labels_for_address(self.address.name, self.address.street)
-
             if self.address.nickname:
                 lines = [f"[italic]{self.address.nickname}[/italic]", ""]
 
@@ -53,8 +51,10 @@ class AddressInfoWidget(Static):
                 self.address.street,
                 f"{self.address.city}, {self.address.state} {self.address.zipcode}",
                 "",
-                f"{', '.join([str(label.name) for label in labels])}",
             ]
+
+        labels = get_labels_for_address(self.address.name, self.address.street)
+        lines.append(f"{', '.join([str(label.name) for label in labels])}")
 
         return "\n".join(lines)
 
