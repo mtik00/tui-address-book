@@ -37,6 +37,17 @@ class Address(BaseModel):
         self.updated_at = datetime.datetime.now()  # type: ignore
         return super().save(*args, **kwargs)
 
+    def is_valid(self) -> bool:
+        return (
+            str(self.street)  # type: ignore
+            and str(self.city)
+            and str(self.state)
+            and str(self.zipcode)
+        )
+
+    def __str__(self) -> str:
+        return f"<Address {self.name=} {self.street=} {self.city=} {self.state=} {self.zipcode=} {self.nickname}>"
+
 
 class LabelAddress(BaseModel):
     label = ForeignKeyField(Label, backref="labels")

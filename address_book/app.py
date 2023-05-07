@@ -47,15 +47,17 @@ class AddressInfoWidget(Static):
 
     def render(self):
         lines = []
+        log.info(self.address)
         if self.address:
             if self.address.nickname:
                 lines = [f"[italic]{self.address.nickname}[/italic]", ""]
 
-            lines += [
-                self.address.street,
-                f"{self.address.city}, {self.address.state} {self.address.zipcode}",
-                "",
-            ]
+            if self.address.is_valid():
+                lines += [
+                    f"{self.address.street}",
+                    f"{self.address.city}, {self.address.state} {self.address.zipcode}",
+                    "",
+                ]
 
         labels = get_labels_for_address(self.address.name, self.address.street)
         lines.append(f"{', '.join([str(label.name) for label in labels])}")
@@ -91,7 +93,11 @@ class AddressBookApp(App):
     def new_address(self, address: Address) -> None:
         widg = self.query_one(AddressInfoWidget)
         widg.address = address
-        log.info("%s: new address set", self.__class__)
+        # NOTE: For some reason we need to refresh the layout or only the
+        #       first line of the address will show.
+        widg.refresh(layout=True)
+
+        log.info("%s: new address set", self.__class__.__name__)
 
     def action_edit(self):
         address = self.query_one(AddressInfoWidget).address
