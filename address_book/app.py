@@ -9,6 +9,8 @@ from textual.widgets import Footer, Header, ListItem, ListView, Static
 
 from .db import Address, Label, add_label_to_address, get_labels_for_address
 from .modals.edit_address import EditAddressScreen
+from .modals.help import HelpScreen
+
 
 log = logging.getLogger(__name__)
 
@@ -72,9 +74,10 @@ class AddressBookApp(App):
         Binding(key="q", action="quit", description="Quit"),
         Binding(key="e", action="edit", description="Edit"),
         Binding(key="s", action="select", description="Select Item"),
-        Binding(key="ctrl+a", action="all", description="Select All"),
-        Binding(key="ctrl+n", action="none", description="Select None"),
+        Binding(key="ctrl+a", action="all", description="Select All", show=False),
+        Binding(key="ctrl+d", action="none", description="Select None", show=False),
         Binding(key="l", action="label", description="Label selected items"),
+        Binding(key="?", action="help", description="Show Help"),
     ]
 
     def compose(self) -> ComposeResult:
@@ -102,6 +105,9 @@ class AddressBookApp(App):
     def action_edit(self):
         address = self.query_one(AddressInfoWidget).address
         self.push_screen(EditAddressScreen(address))
+
+    def action_help(self):
+        self.push_screen(HelpScreen())
 
     def action_select(self):
         # Update the widgets we just modified
