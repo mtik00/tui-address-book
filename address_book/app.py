@@ -21,10 +21,14 @@ class AddressListItem(ListItem):
         self.address = address
 
     def render(self):
-        if self.selected:
-            return f"* {self.address.name}"
+        name = self.address.name
+        if not self.address.street:
+            name = f"[italic]{name}[/italic]"
 
-        return self.address.name
+        if self.selected:
+            return f"* {name}"
+
+        return name
 
     def watch_highlighted(self, value: bool):
         if value:
