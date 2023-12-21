@@ -9,9 +9,10 @@ packages = [{include = "address_book"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 peewee = "^3.16.2"
-pydantic = {extras = ["dotenv"], version = "^1.10.7"}
 textual = "^0.23.0"
 pendulum = "^2.1.2"
+pydantic = "^2.5.2"
+pydantic-settings = "^2.1.0"
 
 
 [tool.poetry.group.dev.dependencies]
