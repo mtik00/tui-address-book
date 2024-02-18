@@ -15,6 +15,11 @@ HELP = """
 * `ctrl+a` -- Select all addresses
 * `ctrl+d` -- Select no addresses
 
+## Address Actions
+* `e` -- Edit the selected address
+* `s` -- Select the address
+* `l` -- Label all selected addresses
+
 ## File Actions
 * `crtl+l` -- Reload address book
 * `crtl+s` -- Save address book
