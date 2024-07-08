@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+
 import logging
 
 from textual.app import App, Binding, ComposeResult
@@ -11,7 +11,7 @@ from .db import Address, Label, add_label_to_address, get_labels_for_address
 from .modals.edit_address import EditAddressScreen
 from .modals.help import HelpScreen
 
-log = logging.getLogger(__name__)
+log = logging.getLogger("test")
 
 
 class AddressListItem(ListItem):
@@ -83,10 +83,7 @@ class AddressBookApp(App):
         yield Header(name="My App")
         with Container(id="app-grid"):
             with VerticalScroll(id="left-pane"):
-                children = [
-                    AddressListItem(address)
-                    for address in Address.select().order_by(Address.name)
-                ]
+                children = [AddressListItem(address) for address in Address.select().order_by(Address.name)]
                 yield ListView(*children, id="address-listview")
             with VerticalScroll(id="right-pane"):
                 yield AddressInfoWidget(Address.select().first(), id="address-info")

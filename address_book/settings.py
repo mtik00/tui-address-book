@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     logging: LoggingSettings = LoggingSettings()
 
     class Config:
+        env_file = ".env"
         env_prefix = "address_book_"
         env_nested_delimiter = "__"
 
